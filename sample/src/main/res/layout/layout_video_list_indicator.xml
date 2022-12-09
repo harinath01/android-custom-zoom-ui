@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/videoList_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:src="@drawable/arrow_down_normal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/videoList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:focusable="false" />
+</merge>

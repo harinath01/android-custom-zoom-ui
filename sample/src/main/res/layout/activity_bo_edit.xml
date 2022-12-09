@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Edit BO name:"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edtx_bo_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_edit_title"
+        android:layout_marginTop="4dp"
+        android:hint="input a bo name"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" />
+
+    <TextView
+        android:id="@+id/tv_users_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtx_bo_name"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="BO members:"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/lv_bo_users"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_below="@+id/tv_users_title"
+        android:layout_marginBottom="4dp">
+
+    </ListView>
+
+
+    <LinearLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onClose"
+            android:text="Close"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_delete_bo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:onClick="onClickDeleteBO"
+            android:text="Delete BO"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_save_bo_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_weight="1"
+            android:onClick="onClickSaveBoName"
+            android:text="Save BO Name"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>

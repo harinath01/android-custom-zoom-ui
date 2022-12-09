@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/lv_unassigned_users"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lv_bo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/rl_bottom"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp">
+
+        </ListView>
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onClose"
+                android:text="Close"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_add_bo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickAddBO"
+                android:text="Add BO"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_batch_add_bo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickBatchAddBO"
+                android:text="Batch Add BO"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_open_bo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickStartBO"
+                android:text="Open All BO"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

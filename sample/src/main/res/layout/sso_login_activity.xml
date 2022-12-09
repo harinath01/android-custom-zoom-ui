@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+	<EditText
+		android:id="@+id/edtSSODomainPrefix"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="SSO Domain Prefix"
+		android:imeOptions="actionNext|flagNoExtractUi"
+		android:focusable="true"
+		android:inputType="text"
+		android:layout_marginTop="30dp" >
+	</EditText>
+
+	<Button
+		android:id="@+id/btnConfirm"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:minWidth="100dp"
+		android:text="Generate Login Url" />
+
+	<LinearLayout
+		android:id="@+id/operationLayout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:visibility="gone"
+		android:layout_marginTop="30dp"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="you can enter the web login url self or auto login with the webview:"/>
+
+		<Button
+			android:id="@+id/btnLoginBySelf"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:text="enter the web login url self:"/>
+
+		<Button
+			android:id="@+id/btnAUtoLogin"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:text="Auto Login In"/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/webViewProgressPanel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<TextView
+			android:paddingLeft="5dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Web Loading... "/>
+
+	</LinearLayout>
+
+	<WebView
+		android:id="@+id/webview"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone"/>
+
+	<LinearLayout
+		android:id="@+id/enterLoginInfoLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp">
+
+		<EditText
+			android:id="@+id/tvGenerateUrl"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="you can copy the generate url to browser to get the login url, may start with zoomXX:://, and then copy it to the follow edittext "
+			android:layout_marginTop="16dp"/>
+
+		<EditText
+			android:id="@+id/edtLoginUrl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:hint="enter the login url from web:"/>
+
+		<Button
+			android:id="@+id/btnLoginConfirm"
+			android:layout_width="match_parent"
+			android:layout_height="44dp"
+			android:text="Confirm to Login"/>
+	</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/progressPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+	    <ProgressBar
+	        android:id="@+id/progressBar"
+	        style="?android:attr/progressBarStyleSmall"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+
+		<TextView
+			android:id="@+id/txtConnecting"
+			android:paddingLeft="5dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Logining... "/>
+
+	</LinearLayout>
+        
+</LinearLayout>

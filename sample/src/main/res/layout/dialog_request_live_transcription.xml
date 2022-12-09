@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request that the host enable Live Transcription for the meeting?"/>
+
+    <Button
+        android:id="@+id/requestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request"
+        android:layout_marginTop="40dp" />
+
+    <Button
+        android:id="@+id/anonymouslyRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request Anonymous"
+        android:layout_marginTop="40dp"/>
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_marginTop="40dp"/>
+</LinearLayout>

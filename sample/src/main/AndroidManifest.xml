@@ -26,12 +26,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.APIUserStartJoinMeetingActivity"
-                  android:exported="false"
-                  android:label="@string/this_app_name"
-                  android:icon="@drawable/ic_launcher"
-                  android:theme="@style/ZMTheme.MainWindow" >
-        </activity>
 
         <activity android:name=".ui.LoginUserStartJoinMeetingActivity"
             android:label="@string/this_app_name"
@@ -41,13 +35,6 @@
             android:theme="@style/ZMTheme.MainWindow" >
         </activity>
 
-        <activity android:name="us.zoom.sdksample.ui.SSOUserLoginActivity"
-            android:label="@string/this_app_name"
-            android:icon="@drawable/ic_launcher"
-            android:theme="@style/ZMTheme.MainWindow"
-            android:exported="false"
-            android:screenOrientation="portrait" >
-        </activity>
         
         <activity android:name="us.zoom.sdksample.otherfeatures.MyInviteActivity"
                   android:label="@string/invite_acitivity_name"

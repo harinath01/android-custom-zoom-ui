@@ -10,20 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Zoom Sdk Sample"
+        android:text="Testpress"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
-    <Button
-        android:id="@+id/btnSettings"
-        android:onClick="onClickSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:minWidth="150dp"
-        android:visibility="gone"
-        android:text="Settings" />
 
     <Button
         android:id="@+id/btn_return"
@@ -49,7 +39,7 @@
             android:id="@+id/edit_join_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Input Meeting number"
+            android:hint="Meeting number"
             android:minWidth="150dp"
             android:inputType="number" />
 

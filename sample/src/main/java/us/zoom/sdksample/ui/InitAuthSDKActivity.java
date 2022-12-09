@@ -138,25 +138,6 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if(!mZoomSDK.isInitialized())
-        {
-            Toast.makeText(this,"Init SDK First",Toast.LENGTH_SHORT).show();
-            InitAuthSDKHelper.getInstance().initSDK(this, this);
-            return;
-        }
-    }
-
-    public void onClickSettings(View view) {
-        if(!mZoomSDK.isInitialized())
-        {
-            Toast.makeText(this,"Init SDK First",Toast.LENGTH_SHORT).show();
-            InitAuthSDKHelper.getInstance().initSDK(this, this);
-            return;
-        }
-        startActivity(new Intent(this, MeetingSettingActivity.class));
-    }
 
     @Override
     public void onZoomSDKLoginResult(long result) {

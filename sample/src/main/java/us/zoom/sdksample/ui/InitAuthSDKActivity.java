@@ -39,12 +39,9 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
 
     private final static String TAG = "ZoomSDKExample";
 
-    private Button mBtnSSOLogin;
-    private Button mBtnWithoutLogin;
     private View layoutJoin;
     private View mProgressPanel;
     private EditText numberEdit;
-    private EditText nameEdit;
     private ZoomSDK mZoomSDK;
 
     private Button mReturnMeeting;
@@ -64,25 +61,17 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
 
         setContentView(R.layout.init_auth_sdk);
 
-        mBtnSSOLogin = (Button) findViewById(R.id.btnSSOLogin);
-        mBtnSSOLogin.setOnClickListener(this);
-
-        mBtnWithoutLogin = (Button) findViewById(R.id.btnWithoutLogin);
-        mBtnWithoutLogin.setOnClickListener(this);
         mProgressPanel = (View) findViewById(R.id.progressPanel);
 
         mReturnMeeting = findViewById(R.id.btn_return);
 
         layoutJoin = findViewById(R.id.layout_join);
         numberEdit = findViewById(R.id.edit_join_number);
-        nameEdit = findViewById(R.id.edit_join_name);
         mProgressPanel.setVisibility(View.GONE);
 
          InitAuthSDKHelper.getInstance().initSDK(this, this);
 
         if (mZoomSDK.isInitialized()) {
-            mBtnSSOLogin.setVisibility(View.VISIBLE);
-            mBtnWithoutLogin.setVisibility(View.VISIBLE);
             layoutJoin.setVisibility(View.VISIBLE);
 
             View view = findViewById(R.id.btnSettings);
@@ -92,8 +81,6 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             ZoomSDK.getInstance().getMeetingService().addListener(this);
             ZoomSDK.getInstance().getMeetingSettingsHelper().enable720p(false);
         } else {
-            mBtnSSOLogin.setVisibility(View.GONE);
-            mBtnWithoutLogin.setVisibility(View.GONE);
             layoutJoin.setVisibility(View.GONE);
         }
     }
@@ -159,11 +146,6 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             InitAuthSDKHelper.getInstance().initSDK(this, this);
             return;
         }
-        if (v.getId() == R.id.btnSSOLogin) {
-            showSSOLoginActivity();
-        } else if (v.getId() == R.id.btnWithoutLogin) {
-            showAPIUserActivity();
-        }
     }
 
     public void onClickSettings(View view) {
@@ -218,19 +200,15 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             ZoomSDK.getInstance().getSmsService().enableZoomAuthRealNameMeetingUIShown(true);
         }
         String number = numberEdit.getText().toString();
-        String name = nameEdit.getText().toString();
 
         JoinMeetingParams params = new JoinMeetingParams();
-        params.meetingNo = number;
-        params.displayName = name;
-        JoinMeetingOptions options=new JoinMeetingOptions();
+        params.meetingNo = (number.isEmpty()) ? "83071465697": number;
+        params.displayName = "hari";
         ZoomSDK.getInstance().getMeetingService().joinMeetingWithParams(this, params,ZoomMeetingUISettingHelper.getJoinMeetingOptions());
     }
 
     private void showProgressPanel(boolean show) {
         if (show) {
-            mBtnSSOLogin.setVisibility(View.GONE);
-            mBtnWithoutLogin.setVisibility(View.GONE);
             mReturnMeeting.setVisibility(View.GONE);
             mProgressPanel.setVisibility(View.VISIBLE);
             layoutJoin.setVisibility(View.GONE);
@@ -243,22 +221,10 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             if (null != view) {
                 view.setVisibility(View.VISIBLE);
             }
-            mBtnWithoutLogin.setVisibility(View.VISIBLE);
-            mBtnSSOLogin.setVisibility(View.VISIBLE);
             mProgressPanel.setVisibility(View.GONE);
             layoutJoin.setVisibility(View.VISIBLE);
             mReturnMeeting.setVisibility(View.GONE);
         }
-    }
-
-    private void showSSOLoginActivity() {
-        Intent intent = new Intent(this, SSOUserLoginActivity.class);
-        startActivity(intent);
-    }
-
-    private void showAPIUserActivity() {
-        Intent intent = new Intent(this, APIUserStartJoinMeetingActivity.class);
-        startActivity(intent);
     }
 
     private void showEmailLoginUserStartJoinActivity() {

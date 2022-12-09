@@ -88,7 +88,6 @@ import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.adapter.Atte
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.share.AnnotateToolbar;
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.share.CustomShareView;
 import us.zoom.sdksample.inmeetingfunction.livetranscription.LiveTranscriptionRequestHandleDialog;
-import us.zoom.sdksample.ui.APIUserStartJoinMeetingActivity;
 import us.zoom.sdksample.ui.BreakoutRoomsAdminActivity;
 import us.zoom.sdksample.ui.InitAuthSDKActivity;
 import us.zoom.sdksample.ui.LoginUserStartJoinMeetingActivity;
@@ -858,8 +857,6 @@ public class MyMeetingActivity extends FragmentActivity implements View.OnClickL
         Class clz = LoginUserStartJoinMeetingActivity.class;
         if (from == JOIN_FROM_UNLOGIN) {
             clz = InitAuthSDKActivity.class;
-        } else if (from == JOIN_FROM_APIUSER) {
-            clz = APIUserStartJoinMeetingActivity.class;
         }
         Intent intent = new Intent(this, clz);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

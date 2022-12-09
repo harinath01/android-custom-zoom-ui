@@ -412,8 +412,6 @@ public class LoginUserStartJoinMeetingActivity extends Activity implements AuthC
             @Override
             public void run() {
                 if (ZoomSDK.getInstance().isInitialized()) {
-                    Intent intent = new Intent(LoginUserStartJoinMeetingActivity.this, SSOUserLoginActivity.class);
-                    startActivity(intent);
                 }
                 finish();
             }

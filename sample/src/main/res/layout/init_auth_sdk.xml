@@ -14,21 +14,6 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnSSOLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:minWidth="150dp"
-        android:text="SSO Login User" />
-
-    <Button
-        android:id="@+id/btnWithoutLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:minWidth="150dp"
-        android:text="API User" />
 
     <Button
         android:id="@+id/btnSettings"
@@ -67,13 +52,6 @@
             android:hint="Input Meeting number"
             android:minWidth="150dp"
             android:inputType="number" />
-
-        <EditText
-            android:id="@+id/edit_join_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="150dp"
-            android:hint="Input user name" />
 
         <Button
             android:layout_width="wrap_content"

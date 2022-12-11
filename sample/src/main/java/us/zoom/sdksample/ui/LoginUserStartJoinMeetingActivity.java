@@ -368,7 +368,7 @@ public class LoginUserStartJoinMeetingActivity extends Activity implements AuthC
             } else {
                 intent = new Intent(this, RawDataMeetingActivity.class);
             }
-            intent.putExtra("from",MyMeetingActivity.JOIN_FROM_LOGIN);
+            intent.putExtra("from", 3);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             this.startActivity(intent);
         }

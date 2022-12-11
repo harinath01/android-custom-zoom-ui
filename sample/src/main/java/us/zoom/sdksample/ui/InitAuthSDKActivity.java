@@ -299,7 +299,7 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             Intent intent = null;
             if (!enable) {
                 intent = new Intent(this, MyMeetingActivity.class);
-                intent.putExtra("from",MyMeetingActivity.JOIN_FROM_UNLOGIN);
+                intent.putExtra("from",1);
             } else {
                 intent = new Intent(this, RawDataMeetingActivity.class);
             }

@@ -13,28 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
-
-        <FrameLayout
-            android:id="@+id/share_contain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignWithParentIfMissing="true"
-            android:orientation="vertical">
-
-            <us.zoom.sdk.MobileRTCShareView
-                android:id="@+id/sharingView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone" />
-
-            <us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.share.AnnotateToolbar
-                android:id="@+id/drawingView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:visibility="gone" />
-        </FrameLayout>
-
     </RelativeLayout>
 
 

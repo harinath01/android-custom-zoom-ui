@@ -1,10 +1,6 @@
 package us.zoom.sdksample.ui
 
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.Companion.instance
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.removeOverlayListener
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.showMeetingWindow
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.hiddenMeetingWindow
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.onActivityResult
 import android.app.Activity
 import android.app.AlertDialog
 import us.zoom.sdksample.initsdk.AuthConstants
@@ -12,17 +8,12 @@ import android.widget.EditText
 import android.os.Bundle
 import us.zoom.sdksample.R
 import android.content.Intent
-import us.zoom.sdksample.ui.LoginUserStartJoinMeetingActivity
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper
 import android.widget.Toast
 import us.zoom.sdksample.startjoinmeeting.joinmeetingonly.JoinMeetingHelper
 import android.content.DialogInterface
 import us.zoom.sdksample.startjoinmeeting.LoginUserStartMeetingHelper
-import us.zoom.sdksample.ui.UIUtil
 import android.text.TextUtils
-import us.zoom.sdksample.ui.MeetingSettingActivity
 import us.zoom.sdksample.inmeetingfunction.zoommeetingui.ZoomMeetingUISettingHelper
-import android.content.SharedPreferences
 import android.util.Log
 import android.view.View
 import android.widget.Button

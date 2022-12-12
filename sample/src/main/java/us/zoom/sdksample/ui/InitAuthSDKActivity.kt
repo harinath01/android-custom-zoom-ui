@@ -1,9 +1,6 @@
 package us.zoom.sdksample.ui
 
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.Companion.instance
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.showMeetingWindow
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.hiddenMeetingWindow
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.onActivityResult
 import android.app.Activity
 import us.zoom.sdksample.initsdk.InitAuthSDKCallback
 import us.zoom.sdksample.startjoinmeeting.UserLoginCallback.ZoomDemoAuthenticationListener
@@ -29,13 +26,12 @@ import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.RawDataMeetingAct
 
 class InitAuthSDKActivity : Activity(), InitAuthSDKCallback, MeetingServiceListener,
     ZoomDemoAuthenticationListener {
-    private var layoutJoin: View? = null
+    lateinit var layoutJoin: View;
     private var mProgressPanel: View? = null
     private var numberEdit: EditText? = null
-    private val mZoomSDK: ZoomSDK? = null
     private var mReturnMeeting: Button? = null
     private var isResumed = false
-    private var zoomSDK: ZoomSDK? = null
+    lateinit var zoomSDK: ZoomSDK
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         zoomSDK = ZoomSDK.getInstance()

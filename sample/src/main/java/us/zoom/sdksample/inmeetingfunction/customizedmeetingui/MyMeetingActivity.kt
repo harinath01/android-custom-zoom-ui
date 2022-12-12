@@ -17,16 +17,16 @@ import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.share.MeetingShar
 import java.lang.Exception
 
 class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent {
-    var zoomSDK: ZoomSDK? = null
-    var meetingService: MeetingService? = null
-    var inMeetingService: InMeetingService? = null
-    var meetingVideoView: FrameLayout? = null
-    var normalSenceView: View? = null
+    lateinit var zoomSDK: ZoomSDK;
+    lateinit var meetingService: MeetingService;
+    lateinit var inMeetingService: InMeetingService;
+    lateinit var meetingVideoView: FrameLayout;
+    lateinit var normalSenceView: View;
     private var defaultVideoView: MobileRTCVideoView? = null
     private var defaultVideoViewMgr: MobileRTCVideoViewManager? = null
     private var mWaitJoinView: View? = null
     private var mWaitRoomView: View? = null
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -37,19 +37,15 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         zoomSDK = ZoomSDK.getInstance()
         meetingService = zoomSDK.getMeetingService()
         inMeetingService = zoomSDK.getInMeetingService()
-        if (meetingService == null || inMeetingService == null) {
-            finish()
-            return
-        }
         setContentView(R.layout.my_meeting_layout)
         meetingVideoView = findViewById<View>(R.id.meetingVideoView) as FrameLayout
-        meetingVideoView!!.visibility = View.VISIBLE
+        meetingVideoView.visibility = View.VISIBLE
         val inflater = layoutInflater
-        normalSenceView = inflater.inflate(R.layout.layout_meeting_content_normal, null)
+        normalSenceView = inflater.inflate(R.layout.layout_meeting_content_normal, null) as View
         defaultVideoView = normalSenceView.findViewById<View>(R.id.videoView) as MobileRTCVideoView
         mWaitJoinView = findViewById(R.id.waitJoinView) as View
         mWaitRoomView = findViewById(R.id.waitingRoom) as View
-        meetingVideoView!!.addView(
+        meetingVideoView.addView(
             normalSenceView,
             FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -94,22 +90,22 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
 
     private fun checkShowVideoLayout() {
         removeExistingViews()
-        val meetingStatus = meetingService!!.meetingStatus
+        val meetingStatus = meetingService.meetingStatus
         if (meetingStatus == MeetingStatus.MEETING_STATUS_WAITINGFORHOST) {
             mWaitJoinView!!.visibility = View.VISIBLE
-            meetingVideoView!!.visibility = View.GONE
+            meetingVideoView.visibility = View.GONE
         } else if (meetingStatus == MeetingStatus.MEETING_STATUS_IN_WAITING_ROOM) {
             mWaitRoomView!!.visibility = View.VISIBLE
-            meetingVideoView!!.visibility = View.GONE
+            meetingVideoView.visibility = View.GONE
         } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
             if (defaultVideoViewMgr != null) {
-                meetingVideoView!!.visibility = View.VISIBLE
+                meetingVideoView.visibility = View.VISIBLE
                 defaultVideoViewMgr!!.removeAllVideoUnits()
                 val renderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
-                val shareController = inMeetingService!!.inMeetingShareController
+                val shareController = inMeetingService.inMeetingShareController
                 if (shareController.isOtherSharing) {
                     defaultVideoViewMgr!!.addShareVideoUnit(
-                        inMeetingService!!.activeShareUserID(),
+                        inMeetingService.activeShareUserID(),
                         renderInfo
                     )
                 } else {
@@ -127,17 +123,11 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
 
     override fun onPause() {
         super.onPause()
-        if (meetingService == null || inMeetingService == null) {
-            return
-        }
         defaultVideoView!!.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        if (meetingService == null || inMeetingService == null) {
-            return
-        }
         clearSubscribe()
     }
 
@@ -156,7 +146,7 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         try {
             MeetingUserCallback.getInstance().removeListener(this)
             MeetingCommonCallback.getInstance().removeListener(this)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 

@@ -8,10 +8,7 @@ import android.content.Context
 import us.zoom.sdk.ZoomSDK
 import android.os.Build
 import android.content.Intent
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper
 import us.zoom.sdksample.R
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.MeetingWindowHelper.SingleTapConfirm
-import us.zoom.sdk.InMeetingShareController
 import android.view.GestureDetector.SimpleOnGestureListener
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.MyMeetingActivity
 import android.view.View.OnTouchListener
@@ -81,13 +78,13 @@ class MeetingWindowHelper private constructor() : InMeetingShareListener {
             mWindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         }
         if (null == windowView) {
-            windowView = LayoutInflater.from(context).inflate(R.layout.layout_meeting_window, null)
+            windowView = LayoutInflater.from(context).inflate(R.layout.layout_meeting_window, null) as MobileRTCVideoView
             mobileRTCVideoView =
-                windowView.findViewById<View>(R.id.active_video_view) as MobileRTCVideoView
+                (windowView as MobileRTCVideoView).findViewById<View>(R.id.active_video_view) as MobileRTCVideoView
             renderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
             renderInfo!!.is_border_visible = true
             gestureDetector = GestureDetector(context, SingleTapConfirm())
-            windowView.setOnTouchListener(onTouchListener)
+            (windowView as MobileRTCVideoView).setOnTouchListener(onTouchListener)
         }
         mWindowManager!!.addView(windowView, getLayoutParams(context))
         mbAddedView = true
@@ -212,6 +209,7 @@ class MeetingWindowHelper private constructor() : InMeetingShareListener {
 
     companion object {
         const val REQUEST_SYSTEM_ALERT_WINDOW = 1020
+        @JvmStatic
         var instance: MeetingWindowHelper? = null
             get() {
                 if (null == field) {

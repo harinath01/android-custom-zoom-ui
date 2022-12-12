@@ -28,8 +28,6 @@ import us.zoom.sdk.MobileRTCShareView;
 import us.zoom.sdk.ZoomSDK;
 import us.zoom.sdksample.R;
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.AndroidAppUtil;
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.LegalNoticeDialogUtil;
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.MyMeetingActivity;
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.adapter.SimpleMenuAdapter;
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.view.adapter.SimpleMenuItem;
 import us.zoom.sdksample.util.FileUtils;

@@ -43,8 +43,8 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         val inflater = layoutInflater
         normalSenceView = inflater.inflate(R.layout.layout_meeting_content_normal, null) as View
         defaultVideoView = normalSenceView.findViewById<View>(R.id.videoView) as MobileRTCVideoView
-        mWaitJoinView = findViewById(R.id.waitJoinView) as View
-        mWaitRoomView = findViewById(R.id.waitingRoom) as View
+        mWaitJoinView = findViewById<View>(R.id.waitJoinView)
+        mWaitRoomView = findViewById<View>(R.id.waitingRoom)
         meetingVideoView.addView(
             normalSenceView,
             FrameLayout.LayoutParams(
@@ -53,6 +53,10 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
             )
         )
         defaultVideoViewMgr = defaultVideoView!!.videoViewManager
+        this.registerCallbackListener()
+    }
+
+    fun registerCallbackListener(){
         MeetingCommonCallback.getInstance().addListener(this)
         MeetingUserCallback.getInstance().addListener(this)
         MeetingShareCallback.getInstance().addListener(this)
@@ -118,7 +122,7 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
     private fun removeExistingViews() {
         mWaitJoinView!!.visibility = View.GONE
         mWaitRoomView!!.visibility = View.GONE
-        meetingVideoView!!.visibility = View.GONE
+        meetingVideoView.visibility = View.GONE
     }
 
     override fun onPause() {

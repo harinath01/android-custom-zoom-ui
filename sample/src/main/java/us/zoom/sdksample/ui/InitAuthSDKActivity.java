@@ -178,6 +178,7 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
         JoinMeetingParams params = new JoinMeetingParams();
         params.meetingNo = (number.isEmpty()) ? "83071465697": number;
         params.displayName = "hari";
+        params.password = "110194";
         ZoomSDK.getInstance().getMeetingService().joinMeetingWithParams(this, params,ZoomMeetingUISettingHelper.getJoinMeetingOptions());
     }
 
@@ -299,7 +300,7 @@ public class InitAuthSDKActivity extends Activity implements InitAuthSDKCallback
             Intent intent = null;
             if (!enable) {
                 intent = new Intent(this, MyMeetingActivity.class);
-                intent.putExtra("from",MyMeetingActivity.JOIN_FROM_UNLOGIN);
+                intent.putExtra("from",1);
             } else {
                 intent = new Intent(this, RawDataMeetingActivity.class);
             }

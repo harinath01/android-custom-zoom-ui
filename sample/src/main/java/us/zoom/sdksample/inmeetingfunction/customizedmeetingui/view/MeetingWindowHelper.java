@@ -125,7 +125,7 @@ public class MeetingWindowHelper implements InMeetingShareController.InMeetingSh
     private void addVideoUnit() {
         InMeetingShareController shareController = ZoomSDK.getInstance().getInMeetingService().getInMeetingShareController();
         mobileRTCVideoView.getVideoViewManager().removeAllVideoUnits();
-        final long shareUserId = MyMeetingActivity.mCurShareUserId;
+        final long shareUserId = -1;
         if (shareUserId > 0 && (shareController.isOtherSharing() || shareController.isSharingOut())) {
            mobileRTCVideoView.getVideoViewManager().addShareVideoUnit(shareUserId, renderInfo);
         } else {

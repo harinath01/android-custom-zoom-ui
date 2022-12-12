@@ -5,7 +5,7 @@
     
     <bool name="zm_config_enter_meeting_from_lock_screen">false</bool>
 
-    <string name="zm_config_conf_activity">us.zoom.sdksample.inmeetingfunction.zoommeetingui.CustomZoomUIActivity</string>
+    <string name="zm_config_conf_activity">us.zoom.sdksample.inmeetingfunction.customizedmeetingui.MyMeetingActivity</string>
 
     
 </resources>

@@ -218,7 +218,7 @@ public class MeetingShareHelper {
             Intent intent = mgr.createScreenCaptureIntent();
             if (AndroidAppUtil.hasActivityForIntent(activity, intent)) {
                 try {
-                    activity.startActivityForResult(mgr.createScreenCaptureIntent(), MyMeetingActivity.REQUEST_SHARE_SCREEN_PERMISSION);
+                    activity.startActivityForResult(mgr.createScreenCaptureIntent(), 10);
                 } catch (Exception e) {
                     Log.e(TAG, "askScreenSharePermission failed");
                 }

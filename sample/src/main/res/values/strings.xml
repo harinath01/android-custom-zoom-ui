@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="this_app_name">Zoom SDK Demo</string>
-    
+
     <string name="invite_acitivity_name">Meeting Invite Example</string>
 
     <string name="zm_rc_using_fingers_for_remote_control">Remotely control a desktop using gestures</string>
@@ -26,9 +26,6 @@
     <string name="settings_switch_domain">Switch domain</string>
     <string name="settings_hide_screen_share_toolbar_annotation">Hide annotation button in screen share</string>
     <string name="settings_hide_screen_share_toolbar_stopshare">Hide stopshare button in screen share</string>
-	
-	
 	<string name="zm_msg_interpreter">You have been assigned an interpreter.</string>
-	
 
 </resources>

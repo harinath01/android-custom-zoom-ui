@@ -1,20 +1,21 @@
 package us.zoom.sdksample.inmeetingfunction.customizedmeetingui
 
-import androidx.fragment.app.FragmentActivity
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback.UserEvent
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.share.MeetingShareCallback.ShareEvent
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.other.MeetingCommonCallback.CommonEvent
-import android.widget.FrameLayout
 import android.os.Bundle
-import android.view.WindowManager
-import us.zoom.sdksample.R
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.fragment.app.FragmentActivity
 import us.zoom.sdk.*
+import us.zoom.sdksample.R
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.other.MeetingCommonCallback
-import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback
+import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.other.MeetingCommonCallback.CommonEvent
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.share.MeetingShareCallback
-import java.lang.Exception
+import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.share.MeetingShareCallback.ShareEvent
+import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback
+import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback.UserEvent
 
 class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent {
     lateinit var zoomSDK: ZoomSDK;
@@ -22,8 +23,11 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
     lateinit var inMeetingService: InMeetingService;
     lateinit var meetingVideoView: FrameLayout;
     lateinit var normalSenceView: View;
-    private var defaultVideoView: MobileRTCVideoView? = null
-    private var defaultVideoViewMgr: MobileRTCVideoViewManager? = null
+    lateinit var sideBar: View;
+    private lateinit var defaultVideoView: MobileRTCVideoView
+    private lateinit var webCamVideoView: MobileRTCVideoView
+    private lateinit var defaultVideoViewMgr: MobileRTCVideoViewManager
+    lateinit var webCamVideoViewMgr: MobileRTCVideoViewManager
     private var mWaitJoinView: View? = null
     private var mWaitRoomView: View? = null
 
@@ -43,8 +47,10 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         val inflater = layoutInflater
         normalSenceView = inflater.inflate(R.layout.layout_meeting_content_normal, null) as View
         defaultVideoView = normalSenceView.findViewById<View>(R.id.videoView) as MobileRTCVideoView
-        mWaitJoinView = findViewById<View>(R.id.waitJoinView)
-        mWaitRoomView = findViewById<View>(R.id.waitingRoom)
+        webCamVideoView = normalSenceView.findViewById<View>(R.id.camView) as MobileRTCVideoView
+        sideBar = normalSenceView.findViewById(R.id.sidebar)
+        mWaitJoinView = findViewById(R.id.waitJoinView)
+        mWaitRoomView = findViewById(R.id.waitingRoom)
         meetingVideoView.addView(
             normalSenceView,
             FrameLayout.LayoutParams(
@@ -52,7 +58,9 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
-        defaultVideoViewMgr = defaultVideoView!!.videoViewManager
+        defaultVideoViewMgr = defaultVideoView.videoViewManager
+        webCamVideoViewMgr = webCamVideoView.videoViewManager
+
         this.registerCallbackListener()
     }
 
@@ -102,20 +110,32 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
             mWaitRoomView!!.visibility = View.VISIBLE
             meetingVideoView.visibility = View.GONE
         } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
-            if (defaultVideoViewMgr != null) {
-                meetingVideoView.visibility = View.VISIBLE
-                defaultVideoViewMgr!!.removeAllVideoUnits()
-                val renderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
-                val shareController = inMeetingService.inMeetingShareController
-                if (shareController.isOtherSharing) {
-                    defaultVideoViewMgr!!.addShareVideoUnit(
-                        inMeetingService.activeShareUserID(),
-                        renderInfo
-                    )
-                } else {
-                    defaultVideoViewMgr!!.addActiveVideoUnit(renderInfo)
+            val params = defaultVideoView.getLayoutParams() as LinearLayout.LayoutParams
+            meetingVideoView.visibility = View.VISIBLE
+            defaultVideoViewMgr.removeAllVideoUnits()
+            webCamVideoViewMgr.removeAllVideoUnits()
+            val defaultVideoViewRenderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
+            val shareController = inMeetingService.inMeetingShareController
+            if (shareController.isOtherSharing) {
+                webCamVideoView.visibility = View.VISIBLE
+                val WebCamVideoViewRenderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100).apply {
+                    is_border_visible = true
+                    aspect_mode = MobileRTCVideoUnitAspectMode.VIDEO_ASPECT_ORIGINAL;
                 }
+                webCamVideoViewMgr.addAttendeeVideoUnit(inMeetingService.activeShareUserID(), WebCamVideoViewRenderInfo)
+                defaultVideoViewMgr.addShareVideoUnit(
+                    inMeetingService.activeShareUserID(),
+                    defaultVideoViewRenderInfo
+                )
+                sideBar.visibility = View.VISIBLE
+                params.weight = 0.75f
+            } else {
+                sideBar.visibility = View.GONE
+                webCamVideoView.visibility = View.GONE
+                params.weight = 1f
+                defaultVideoViewMgr.addActiveVideoUnit(defaultVideoViewRenderInfo)
             }
+            defaultVideoView.layoutParams = params
         }
     }
 
@@ -127,7 +147,7 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
 
     override fun onPause() {
         super.onPause()
-        defaultVideoView!!.onPause()
+        defaultVideoView.onPause()
     }
 
     override fun onStop() {
@@ -136,9 +156,7 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
     }
 
     private fun clearSubscribe() {
-        if (null != defaultVideoViewMgr) {
-            defaultVideoViewMgr!!.removeAllVideoUnits()
-        }
+        defaultVideoViewMgr.removeAllVideoUnits()
     }
 
     override fun onDestroy() {

@@ -1,13 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    >
 
     <us.zoom.sdk.MobileRTCVideoView
         android:id="@+id/videoView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:focusable="false" />
+        android:gravity="center"
+        android:focusable="false"
+        android:layout_weight="1"
+        />
 
-</FrameLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.25"
+        android:id="@+id/sidebar"
+        android:visibility="gone"
+        >
+        <us.zoom.sdk.MobileRTCVideoView
+            android:id="@+id/camView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:focusable="false"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_weight="0.3"
+            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:background="@color/white"
+            >
+
+        </FrameLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

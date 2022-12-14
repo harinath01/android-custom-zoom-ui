@@ -1,10 +1,13 @@
 package us.zoom.sdksample.inmeetingfunction.customizedmeetingui
 
+import android.app.ActionBar.LayoutParams
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentActivity
 import us.zoom.sdk.*
@@ -16,19 +19,21 @@ import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.share.MeetingShar
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback
 import us.zoom.sdksample.inmeetingfunction.customizedmeetingui.user.MeetingUserCallback.UserEvent
 
-class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent {
+class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent,
+    View.OnClickListener {
     lateinit var zoomSDK: ZoomSDK;
     lateinit var meetingService: MeetingService;
     lateinit var inMeetingService: InMeetingService;
     lateinit var meetingVideoView: FrameLayout;
     lateinit var normalSenceView: View;
-    lateinit var sideBar: View;
+    lateinit var sideChatBar: View;
     private lateinit var defaultVideoView: MobileRTCVideoView
     private lateinit var webCamVideoView: MobileRTCVideoView
     private lateinit var defaultVideoViewMgr: MobileRTCVideoViewManager
     lateinit var webCamVideoViewMgr: MobileRTCVideoViewManager
     private var mWaitJoinView: View? = null
     private var mWaitRoomView: View? = null
+    lateinit var showChatSidebar: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +52,11 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         normalSenceView = inflater.inflate(R.layout.layout_meeting_content_normal, null) as View
         defaultVideoView = normalSenceView.findViewById<View>(R.id.videoView) as MobileRTCVideoView
         webCamVideoView = normalSenceView.findViewById<View>(R.id.camView) as MobileRTCVideoView
-        sideBar = normalSenceView.findViewById(R.id.sidebar)
+        sideChatBar = normalSenceView.findViewById(R.id.sidebar)
+        showChatSidebar = normalSenceView.findViewById(R.id.showChatSidebar)
         mWaitJoinView = findViewById(R.id.waitJoinView)
         mWaitRoomView = findViewById(R.id.waitingRoom)
+        showChatSidebar.setOnClickListener(this)
         meetingVideoView.addView(
             normalSenceView,
             FrameLayout.LayoutParams(
@@ -109,32 +116,28 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
             mWaitRoomView!!.visibility = View.VISIBLE
             meetingVideoView.visibility = View.GONE
         } else if (meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING) {
-            val params = defaultVideoView.getLayoutParams() as LinearLayout.LayoutParams
             meetingVideoView.visibility = View.VISIBLE
-            defaultVideoViewMgr.removeAllVideoUnits()
-            webCamVideoViewMgr.removeAllVideoUnits()
-            val defaultVideoViewRenderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
-            val shareController = inMeetingService.inMeetingShareController
-            if (shareController.isOtherSharing) {
-                webCamVideoView.visibility = View.VISIBLE
-                val WebCamVideoViewRenderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100).apply {
-                    is_border_visible = true
-                    aspect_mode = MobileRTCVideoUnitAspectMode.VIDEO_ASPECT_ORIGINAL;
-                }
-                webCamVideoViewMgr.addAttendeeVideoUnit(inMeetingService.activeShareUserID(), WebCamVideoViewRenderInfo)
-                defaultVideoViewMgr.addShareVideoUnit(
-                    inMeetingService.activeShareUserID(),
-                    defaultVideoViewRenderInfo
-                )
-                sideBar.visibility = View.VISIBLE
-                params.weight = 0.75f
-            } else {
-                sideBar.visibility = View.GONE
-                webCamVideoView.visibility = View.GONE
-                params.weight = 1f
-                defaultVideoViewMgr.addActiveVideoUnit(defaultVideoViewRenderInfo)
-            }
-            defaultVideoView.layoutParams = params
+            this.updateVideoUnits()
+        }
+    }
+
+    fun updateVideoUnits(){
+        defaultVideoViewMgr.removeAllVideoUnits()
+        webCamVideoViewMgr.removeAllVideoUnits()
+        val defaultVideoViewRenderInfo = MobileRTCVideoUnitRenderInfo(0, 0, 100, 100)
+        if (inMeetingService.inMeetingShareController.isOtherSharing) {
+            webCamVideoView.visibility = View.VISIBLE
+            webCamVideoViewMgr.addAttendeeVideoUnit(inMeetingService.activeShareUserID(), MobileRTCVideoUnitRenderInfo(0, 0, 100, 100).apply {
+                is_border_visible = true
+                aspect_mode = MobileRTCVideoUnitAspectMode.VIDEO_ASPECT_ORIGINAL;
+            })
+            defaultVideoViewMgr.addShareVideoUnit(
+                inMeetingService.activeShareUserID(),
+                defaultVideoViewRenderInfo
+            )
+        } else {
+            webCamVideoView.visibility = View.GONE
+            defaultVideoViewMgr.addActiveVideoUnit(defaultVideoViewRenderInfo)
         }
     }
 
@@ -177,6 +180,27 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
 
     override fun onShareUserReceivingStatus(userId: Long) {}
     override fun onShareSettingTypeChanged(type: ShareSettingType) {}
+
+    override fun onClick(view: View?) {
+        when (view?.id) {
+            R.id.showChatSidebar -> {
+                hideChatSideBar(false)
+            }
+        }
+    }
+
+    fun hideChatSideBar(hide: Boolean){
+        val params = defaultVideoView.layoutParams as LinearLayout.LayoutParams
+        if (hide){
+            params.weight = 100F
+            sideChatBar.visibility = View.GONE
+        }else{
+            params.weight = 70F
+            sideChatBar.visibility = View.VISIBLE
+        }
+        defaultVideoView.layoutParams = params
+        this.updateVideoUnits()
+    }
 
     companion object {
         private val TAG = MyMeetingActivity::class.java.simpleName

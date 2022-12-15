@@ -56,6 +56,7 @@ class InitAuthSDKActivity : Activity(), InitAuthSDKCallback, MeetingServiceListe
             zoomSDK.getMeetingService().addListener(this)
             zoomSDK.getMeetingSettingsHelper().enable720p(false)
             zoomSDK.getMeetingSettingsHelper().isCustomizedMeetingUIEnabled = true
+            this.onClickJoin(numberEdit)
         } else {
             layoutJoin.setVisibility(View.GONE)
         }

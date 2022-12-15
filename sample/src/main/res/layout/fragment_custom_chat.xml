@@ -11,16 +11,20 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/type_something"
+        app:endIconDrawable="@drawable/ic_send"
+        app:endIconMode="custom"
+        app:endIconContentDescription="send"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="14dp"
             android:background="@drawable/custom_input_text"
-            android:inputType="textLongMessage"
-            android:hint="Type something" />
+            android:inputType="textLongMessage|textMultiLine"
+            android:padding="12dp"
+            tools:ignore="TextContrastCheck,SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,11 @@
                 android:layout_weight="0.3"
                 android:background="@color/white"
                 android:focusable="false"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:paddingEnd="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView"

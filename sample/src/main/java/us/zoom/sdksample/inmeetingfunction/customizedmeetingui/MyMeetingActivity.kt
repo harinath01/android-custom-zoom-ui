@@ -194,9 +194,11 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
         if (hide){
             params.weight = 100F
             sideChatBar.visibility = View.GONE
+            showChatSidebar.visibility = View.VISIBLE
         }else{
             params.weight = 70F
             sideChatBar.visibility = View.VISIBLE
+            showChatSidebar.visibility = View.GONE
         }
         defaultVideoView.layoutParams = params
         this.updateVideoUnits()

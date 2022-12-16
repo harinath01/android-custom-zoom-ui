@@ -13,7 +13,9 @@
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/this_app_name">
+        android:label="@string/this_app_name"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        >
         <activity
             android:name="us.zoom.sdksample.ui.InitAuthSDKActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|keyboard"

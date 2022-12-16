@@ -1,17 +1,23 @@
 package us.zoom.sdksample.inmeetingfunction.customizedmeetingui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import us.zoom.sdksample.R
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView.OnEditorActionListener
+import androidx.fragment.app.Fragment
 import us.zoom.sdk.*
+import us.zoom.sdksample.R
+
 
 class CustomChatFragment : Fragment(), InMeetingServiceListener{
     lateinit private var zoomSDK: ZoomSDK
     lateinit private var inMeetingService: InMeetingService
     lateinit private var inMeetingChatController: InMeetingChatController
+    lateinit private var inputBox: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +30,21 @@ class CustomChatFragment : Fragment(), InMeetingServiceListener{
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_custom_chat, container, false)
+        val view = inflater.inflate(R.layout.fragment_custom_chat, container, false)
+        inputBox = view.findViewById(R.id.inputBox)
+        inputBox.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if(!v.text.isBlank()){
+                    inMeetingChatController.sendChatToGroup(InMeetingChatController.MobileRTCChatGroup.MobileRTCChatGroup_All,
+                        v.text.toString()
+                    )
+                    v.text = ""
+                }
+            }
+            true
+        })
+        return view
     }
-
 
     override fun onChatMessageReceived(p0: InMeetingChatMessage?) {
 

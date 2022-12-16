@@ -29,13 +29,10 @@
                 android:id="@+id/camView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="30"
                 android:background="@color/white"
                 android:focusable="false"
                 android:visibility="gone"
-                android:paddingEnd="10dp"
-                android:layout_gravity="center"
-                android:gravity="center"
                 />
 
             <androidx.fragment.app.FragmentContainerView
@@ -43,7 +40,7 @@
                 android:name="us.zoom.sdksample.inmeetingfunction.customizedmeetingui.CustomChatFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="70"
                 tools:layout="@layout/fragment_custom_chat" />
         </LinearLayout>
     </LinearLayout>

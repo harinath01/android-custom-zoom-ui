@@ -77,6 +77,7 @@
             android:configChanges="screenSize"
             android:exported="false"
             android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:theme="@style/ZMTheme.FullScreenCamera" />
         <activity
             android:name=".ui.MeetingSettingActivity"

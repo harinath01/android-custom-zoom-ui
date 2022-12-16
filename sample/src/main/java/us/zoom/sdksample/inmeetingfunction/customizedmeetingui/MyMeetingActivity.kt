@@ -196,7 +196,7 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
             sideChatBar.visibility = View.GONE
             showChatSidebar.visibility = View.VISIBLE
         }else{
-            params.weight = 70F
+            params.weight = 65F
             sideChatBar.visibility = View.VISIBLE
             showChatSidebar.visibility = View.GONE
         }

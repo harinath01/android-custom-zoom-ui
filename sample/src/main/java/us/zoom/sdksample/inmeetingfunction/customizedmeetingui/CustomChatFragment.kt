@@ -7,22 +7,27 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import us.zoom.sdk.*
 import us.zoom.sdksample.R
 
 
 class CustomChatFragment : Fragment(), InMeetingServiceListener{
-    lateinit private var zoomSDK: ZoomSDK
-    lateinit private var inMeetingService: InMeetingService
-    lateinit private var inMeetingChatController: InMeetingChatController
-    lateinit private var inputBox: EditText
-    lateinit private var sendButton: ImageButton
+    private lateinit var zoomSDK: ZoomSDK
+    private lateinit var inMeetingService: InMeetingService
+    private lateinit var inMeetingChatController: InMeetingChatController
+    private lateinit var inputBox: EditText
+    private lateinit var sendButton: ImageButton
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var messageAdapter: MessageListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         zoomSDK = ZoomSDK.getInstance()
         inMeetingService = zoomSDK.inMeetingService
         inMeetingChatController = inMeetingService.inMeetingChatController
+        inMeetingService.addListener(this)
     }
 
     override fun onCreateView(
@@ -32,19 +37,30 @@ class CustomChatFragment : Fragment(), InMeetingServiceListener{
         val view = inflater.inflate(R.layout.fragment_custom_chat, container, false)
         sendButton = view.findViewById(R.id.chat_send)
         inputBox = view.findViewById(R.id.inputBox)
+        recyclerView = view.findViewById(R.id.recycler_chat) as RecyclerView
         sendButton.setOnClickListener {
             if(inputBox.text.isNotBlank()){
                 inMeetingChatController.sendChatToGroup(InMeetingChatController.MobileRTCChatGroup.MobileRTCChatGroup_All,
                     inputBox.text.toString()
                 )
                 inputBox.text.clear()
+                recyclerView.post { recyclerView.smoothScrollToPosition(messageAdapter.itemCount - 1) }
             }
         }
         return view
     }
 
-    override fun onChatMessageReceived(p0: InMeetingChatMessage?) {
+    override fun onChatMessageReceived(message: InMeetingChatMessage?) {
+        messageAdapter.addMessage(message)
+        if (!recyclerView.canScrollVertically(1)) {
+            recyclerView.smoothScrollToPosition(messageAdapter.itemCount - 1)
+        }
+    }
 
+    override fun onMeetingUserJoin(p0: MutableList<Long>?) {
+        messageAdapter = MessageListAdapter(inMeetingService.myUserID)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = messageAdapter
     }
 
 
@@ -79,7 +95,6 @@ class CustomChatFragment : Fragment(), InMeetingServiceListener{
     override fun onSinkMeetingVideoQualityChanged(p0: VideoQuality?, p1: Long) {}
     override fun onMicrophoneStatusError(p0: InMeetingAudioController.MobileRTCMicrophoneError?) {}
     override fun onUserAudioStatusChanged(p0: Long, p1: InMeetingServiceListener.AudioStatus?) {}
-    override fun onMeetingUserJoin(p0: MutableList<Long>?) {}
     override fun onMeetingUserLeave(p0: MutableList<Long>?) {}
     override fun onMeetingUserUpdated(p0: Long) {}
     override fun onMeetingHostChanged(p0: Long) {}

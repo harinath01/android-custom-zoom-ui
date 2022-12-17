@@ -175,7 +175,9 @@ class MyMeetingActivity : FragmentActivity(), UserEvent, ShareEvent, CommonEvent
     }
 
     override fun onShareActiveUser(userId: Long) {
-        checkShowVideoLayout()
+        if(inMeetingService.isHostUser(userId)) {
+            checkShowVideoLayout()
+        }
     }
 
     override fun onShareUserReceivingStatus(userId: Long) {}
